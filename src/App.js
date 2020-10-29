@@ -21,8 +21,17 @@ export default function App() {
     });
   }, []);
   async function handleLikeRepository(id) {
-    api.post(`/repositories/${id}/like`);
-    useState([...repositorys]);
+    const response = await api.post(`/repositories/${id}/like`);
+    const likedRepository = response.data;
+
+    const repositoriesUpdated = repositorys.map((repository) => {
+      if (repository.id === id) {
+        return likedRepository;
+      } else {
+        return repository;
+      }
+    });
+    setRepositorys(repositoriesUpdated);
   }
 
   return (
@@ -48,7 +57,7 @@ export default function App() {
                   // Remember to replace "1" below with repository ID: {`repository-likes-${repository.id}`}
                   testID={`repository-likes-${repository.id}`}
                 >
-                  {repository.likes} likes
+                  {repository.likes} curtidas
                 </Text>
               </View>
 
