@@ -19,7 +19,7 @@ export default function App() {
       console.log(response);
       setRepositorys(response.data);
     });
-  });
+  }, []);
   async function handleLikeRepository(id) {
     api.post(`/repositories/${id}/like`);
     useState([...repositorys]);
